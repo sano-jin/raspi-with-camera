@@ -38,7 +38,6 @@ def delete():
     res = requests.post(
         slack_api+"/files.list", params = param)
     # print(json.dumps(res.json(), indent = 1))
-
     for file_json in res.json()['files']:
         if file_json['user'] != USERID:
             continue
