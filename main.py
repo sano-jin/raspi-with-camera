@@ -36,6 +36,7 @@ def upload():
     f.write(file_id)
     f.close
     
+# read id from '/home/pi/id.log' and delete
 def delete():
     f = open('/home/pi/id.log', 'r')
     file_id = f.read()
