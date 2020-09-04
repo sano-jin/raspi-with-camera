@@ -42,7 +42,7 @@ def delete():
     file_id = f.read()
     f.close()
     param = {'token': TOKEN, 'file': file_id}
-    r_post = requests.post(
+    requests.post(
         slack_api+"/files.delete", params=param)
 
 
