@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 from picamera import PiCamera
 from time import sleep
 
