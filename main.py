@@ -24,20 +24,25 @@ def take_pic():
     camera.capture('/home/pi/image.jpg')
     camera.stop_preview()
 
-# upload file and return id
+# upload file and write id to '/home/pi/id.log'
 def upload():
     files = {'file': open('/home/pi/image.jpg', 'rb')}
     param = {'token': TOKEN, 'channels': CHANNEL,
              'filename': 'filename', 'title': 'title'}
     res = requests.post(
         slack_api+"/files.upload", params=param, files=files)
-    return res.json()['file']['id']
+    file_id = res.json()['file']['id']
+    f = open('/home/pi/id.log', 'w')
+    f.write(file_id)
+    f.close
     
-def delete(id):
-    param = {'token': TOKEN, 'file': id}
+def delete():
+    f = open('/home/pi/id.log', 'r')
+    file_id = f.read()
+    f.close()
+    param = {'token': TOKEN, 'file': file_id}
     r_post = requests.post(
         slack_api+"/files.delete", params=param)
-
 
 
 if __name__ == '__main__':
