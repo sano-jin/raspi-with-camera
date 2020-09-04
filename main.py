@@ -10,7 +10,7 @@ ID_PATH = '/home/pi/id.log'
 IMG_PATH = '/home/pi/image.jpg'
 TOKEN = ''
 CHANNEL = ''
-APPID = 'A019NGRQWET'
+APPID = ''
 
 def load_env():
     global TOKEN, CHANNEL
