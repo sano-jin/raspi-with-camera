@@ -1,9 +1,8 @@
 # from picamera import PiCamera
-from time import sleep
+from time import sleep, time
 import requests
 import json
 import os
-import time 
 from dotenv import load_dotenv
 
 slack_api = 'https://slack.com/api'
