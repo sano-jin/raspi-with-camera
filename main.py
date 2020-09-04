@@ -3,6 +3,7 @@ from time import sleep
 import requests
 import json
 import os
+import time 
 from dotenv import load_dotenv
 
 slack_api = 'https://slack.com/api'
@@ -10,7 +11,7 @@ ID_PATH = '/home/pi/id.log'
 IMG_PATH = '/home/pi/image.jpg'
 TOKEN = ''
 CHANNEL = ''
-
+APPID = 'A019NGRQWET'
 
 def load_env():
     global TOKEN, CHANNEL
@@ -30,22 +31,22 @@ def upload():
     files = {'file': open(IMG_PATH, 'rb')}
     param = {'token': TOKEN, 'channels': CHANNEL,
              'filename': 'filename', 'title': 'title'}
-    res = requests.post(
+    requests.post(
         slack_api+"/files.upload", params=param, files=files)
-    file_id = res.json()['file']['id']
-    f = open(ID_PATH, 'w')
-    f.write(file_id)
-    f.close
     
 # read id from ID_PATH and delete
 def delete():
-    f = open(ID_PATH, 'r')
-    file_id = f.read()
-    f.close()
-    param = {'token': TOKEN, 'file': file_id}
-    requests.post(
-        slack_api+"/files.delete", params=param)
+    diff = 60 * 60 # 1 hour
+    param = {'token': TOKEN, 'ts_to': time.time() - diff, 'user' : APPID}
+    res = requests.post(
+        slack_api+"/files.list", params=param)
+    
+    def post_delete( file_json ):
+        param = {'token': TOKEN, 'file': file_json['id']}
+        requests.post(
+            slack_api+"/files.delete", params=param)
 
+    map( lambda file_json: post_delete(file_json), res.json()['files'] )
 
 if __name__ == '__main__':
     load_env()
@@ -53,3 +54,4 @@ if __name__ == '__main__':
 
     # take_pic()
     # upload()
+    # delete()
