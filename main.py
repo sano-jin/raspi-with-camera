@@ -13,10 +13,11 @@ CHANNEL = ''
 APPID = ''
 
 def load_env():
-    global TOKEN, CHANNEL
+    global TOKEN, CHANNEL, APPID
     load_dotenv()
     TOKEN = os.getenv('TOKEN')
     CHANNEL = os.getenv('CHANNEL')
+    APPID = os.getenv('APPID')
 
 def take_pic():
     camera = PiCamera()
