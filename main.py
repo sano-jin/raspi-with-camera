@@ -26,7 +26,6 @@ def take_pic():
     camera.capture(IMG_PATH)
     camera.stop_preview()
 
-# upload file and write id to ID_PATH
 def upload():
     files = {'file': open(IMG_PATH, 'rb')}
     param = {'token': TOKEN, 'channels': CHANNEL,
@@ -34,7 +33,6 @@ def upload():
     requests.post(
         slack_api+"/files.upload", params=param, files=files)
     
-# read id from ID_PATH and delete
 def delete():
     diff = 60 * 60 # 1 hour
     param = {'token': TOKEN, 'ts_to': time.time() - diff, 'user' : APPID}
