@@ -1,7 +1,7 @@
-import requests
-import json
 from picamera import PiCamera
 from time import sleep
+import requests
+import json
 TOKEN =	#                                                                               
 CHANNEL = #                                                                             
 
@@ -23,6 +23,6 @@ param = {
 
 r_post = requests.post("https://slack.com/api/files.upload",
                        params = param,
-		               files = files)
+		       files = files)
 
 # print( r_post.json() ) 
